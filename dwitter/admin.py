@@ -1,11 +1,12 @@
 from django.contrib import admin
 from django.contrib.auth.models import User, Group
 
-from dwitter.models import Profile
+from dwitter.models import Profile, Dweet
 
 
 class ProfileInline(admin.StackedInline):
     model = Profile
+
 
 class UserAdmin(admin.ModelAdmin):
     """Custom admin model. To limit which fields the Django admin should display"""
@@ -18,4 +19,4 @@ admin.site.unregister(Group)
 admin.site.unregister(User)
 
 admin.site.register(User, UserAdmin)
-# admin.site.register(Profile)
+admin.site.register(Dweet)
