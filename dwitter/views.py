@@ -1,12 +1,21 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
+from dwitter.forms import DweetForm
 from dwitter.models import Profile
 
 
 def dashboard(request):
     """Returns start page"""
-    return render(request, 'dwitter/dashboard.html')
+    form = DweetForm(request.POST or None)
 
+    if request.method == 'POST':
+        if form.is_valid():
+            dweet = form.save(commit=False)
+            dweet.user = request.user
+            dweet.save()
+            return redirect("dwitter:dashboard")
+
+    return render(request, "dwitter/dashboard.html", {"form": form})
 
 def get_profile_list(request):
     """Return profiles list page """
