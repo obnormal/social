@@ -5,8 +5,7 @@
 {% block content %}
     <!-- Dashboard  -->
     <div class="column">
-        {% for followed in user.profile.follows.all %}
-            {% for dweet in followed.user.dweets.all %}
+        {% for dweet in dweets %}
                 <div class="box">
                     <h4 class="title is-5">@{{ dweet.user.username.lower }}</h4>
                     <p class="content">{{ dweet.text }}</p>
@@ -14,7 +13,6 @@
                     ({{ dweet.created_at }})
                 </span>
                 </div>
-            {% endfor %}
         {% endfor %}
     </div>
 
