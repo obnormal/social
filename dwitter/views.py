@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 
 from dwitter.forms import DweetForm
@@ -7,7 +8,8 @@ from dwitter.models import Profile, Dweet
 def dashboard(request):
     """Returns start page"""
     form = DweetForm(request.POST or None)
-    user = request.user
+    user = getattr(request, 'user') or User.objects.get(pk=1)
+
     if request.method == 'POST':
         if form.is_valid():
             dweet = form.save(commit=False)
@@ -23,6 +25,7 @@ def dashboard(request):
         "dwitter/dashboard.html",
         {"form": form, "dweets": followed_dweets},
     )
+
 
 def get_profile_list(request):
     """Return profiles list page """
